@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Hub - Find Top Freelancers</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            display: flex;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50px;
+            padding: 5px;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .search-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .category-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Freelancers Section */
+        .freelancers-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .freelancers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .freelancer-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .freelancer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .freelancer-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 4px solid #667eea;
+        }
+
+        .freelancer-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .freelancer-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .rating {
+            background: #ffd700;
+            color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .work-mode {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .contact-btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+        }
+
+        .call-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #e0e0e0;
+            color: #666;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+                border-radius: 15px;
+            }
+
+            .freelancers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <i class="fas fa-video"></i>
+                Creator Hub
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#freelancers">Freelancers</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <h1>Find Top Creators & Freelancers</h1>
+            <p>Connect with expert graphic designers, video editors, and content writers for your next project</p>
+            <div class="search-box">
+                <input type="text" placeholder="Search for graphic designers, editors, writers...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+            <div class="categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="graphic">Graphic Design</button>
+                <button class="category-btn" data-category="video">Video Editing</button>
+                <button class="category-btn" data-category="writing">Content Writing</button>
+                <button class="category-btn" data-category="remote">Work from Home</button>
+                <button class="category-btn" data-category="office">Office</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Freelancers Section -->
+    <section id="freelancers" class="freelancers-section">
+        <div class="container">
+            <h2 class="section-title">Top Freelancers</h2>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="graphic">Graphic Design</button>
+                <button class="filter-btn" data-filter="video">Video Editing</button>
+                <button class="filter-btn" data-filter="writing">Content Writing</button>
+            </div>
+            <div class="freelancers-grid" id="freelancersGrid">
+                <!-- Freelancer cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Sample freelancer data
+        const freelancers = [
+            {
+                id: 1,
+                name: "Sarah Johnson",
+                avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+                profession: "Graphic Designer",
+                rating: 4.9,
+                reviews: 127,
+                skills: ["Logo Design", "Branding", "UI/UX", "Photoshop"],
+                workMode: "Work from Home",
+                price: "$25/hr",
+                whatsapp: "+1234567890",
+                phone: "+1234567890",
+                category: "graphic"
+            },
+            {
+                id: 2,
+                name: "Mike Chen",
+                avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+                profession: "Video Editor",
+                rating: 4.8,
+                reviews: 89,
+                skills: ["Premiere Pro", "After Effects", "Color Grading", "Motion Graphics"],
+                workMode: "Work from Home",
+                price: "$35/hr",
+                whatsapp: "+0987654321",
+                phone: "+0987654321",
+                category: "video"
+            },
+            {
+                id: 3,
+                name: "Emily Davis",
+                avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+                profession: "Content Writer",
+                rating: 5.0,
+                reviews: 203,
+                skills: ["Blog Writing", "SEO", "Copywriting", "Social Media"],
+                workMode: "Office Based",
+                price: "$20/hr",
+                whatsapp: "+1122334455",
+                phone: "+1122334455",
+                category: "writing"
+            },
+            {
+                id: 4,
+                name: "Raj Patel",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+                profession: "Motion Graphics Designer",
+                rating: 4.7,
+                reviews: 67,
+                skills: ["After Effects", "Cinema 4D", "Animation", "VFX"],
+                workMode: "Work from Home",
+                price: "$40/hr",
+                whatsapp: "+1555666777",
+                phone: "+1555666777",
+                category: "video"
+            },
+            {
+                id: 5,
+                name: "Lisa Brown",
+                avatar: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=150&h=150&fit=crop&crop=face",
+                profession: "Brand Strategist",
+                rating: 4.9,
+                reviews: 156,
+                skills: ["Branding", "Marketing", "Strategy", "Social Media"],
+                workMode: "Office Based",
+                price: "$30/hr",
+                whatsapp: "+1888999000",
+                phone: "+1888999000",
+                category: "graphic"
+            },
+            {
+                id: 6,
+                name: "David Kim",
+                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+                profession: "Script Writer",
+                rating: 4.8,
+                reviews: 94,
+                skills: ["Script Writing", "Storytelling", "YouTube Scripts", "Ads"],
+                workMode: "Work from Home",
+                price: "$22/hr",
+                whatsapp: "+1444555666",
+                phone: "+1444555666",
+                category: "writing"
+            }
+        ];
+
+        // Initialize freelancers grid
+        function renderFreelancers(freelancersToShow = freelancers) {
+            const grid = document.getElementById('freelancersGrid');
+            grid.innerHTML = freelancersToShow.map(freelancer => `
+                <div class="freelancer-card" data-category="${freelancer.category}">
+                    <img src="${freelancer.avatar}" alt="${freelancer.name}" class="freelancer-avatar">
+                    <div class="freelancer-header">
+                        <div>
+                            <div class="freelancer-name">${freelancer.name}</div>
+                            <div class="profession">${freelancer.profession}</div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            ${freelancer.rating} (${freelancer.reviews})
+                        </div>
+                    </div>
+                    <div class="skills">
+                        ${freelancer.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                    </div>
+                    <div class="work-mode">
+                        <i class="fas fa-home"></i>
+                        ${freelancer.workMode}
+                    </div>
+                    <div class="price">${freelancer.price}</div>
+                    <div class="contact-buttons">
+                        <a href="https://wa.me/${freelancer.whatsapp.replace('+', '')}" class="contact-btn whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="tel:${freelancer.phone}" class="contact-btn call-btn">
+                            <i class="fas fa-phone"></i> Call
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                if (filter === 'all') {
+                    renderFreelancers();
+                } else {
+                    const filtered = freelancers.filter(f => f.category === filter);
+                    renderFreelancers(filtered);
+                }
+            });
+        });
+
+        // Category buttons in hero
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b =>
